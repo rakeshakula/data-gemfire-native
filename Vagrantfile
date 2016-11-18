@@ -9,10 +9,6 @@ Vagrant.configure("2") do |config|
     vb.memory = "2048"
   end
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "10.211.55.200"
-
   config.vm.provision "shell", inline: <<-SHELL
 
     yum -y install nc expect ed ntp dmidecode pciutils
