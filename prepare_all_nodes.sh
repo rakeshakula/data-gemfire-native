@@ -3,12 +3,6 @@
 yum -y install nc expect ed ntp dmidecode pciutils
 yum -y install gcc gcc-c++ gmp-devel mpfr-devel unzip
 
-# Set timezone and run NTP (set to Europe - Amsterdam time).
-/etc/init.d/ntpd stop; 
-mv /etc/localtime /etc/localtime.bak; 
-ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime; 
-/etc/init.d/ntpd start
-
 # Create and set the hosts file like:
 cat > /etc/hosts <<EOF 
 127.0.0.1     localhost.localdomain    localhost
@@ -20,13 +14,15 @@ EOF
 
 mkdir native
 
-cp /vagrant/Pivotal_GemFire_NativeClient_Linux_64bit_8202_b3768.zip /home/vagrant/native
-cd /home/vagrant/native
-unzip Pivotal_GemFire_NativeClient_Linux_64bit_8202_b3768.zip
+BASEDIR=/home/vagrant/native
+VERSION=64bit_8214_b3879
+cp /vagrant/Pivotal_GemFire_NativeClient_Linux_$VERSION.zip $BASEDIR
+cd $BASEDIR
+unzip Pivotal_GemFire_NativeClient_Linux_$VERSION.zip
 
 cat >> /home/vagrant/.bash_profile <<EOF
 
-export GFCPP=/home/vagrant/native/NativeClient_Linux_64bit_8202_b3768
+export GFCPP=$BASEDIR/NativeClient_Linux_$VERSION
 export PATH=\$GFCPP/bin:\$PATH
 export LD_LIBRARY_PATH=\$GFCPP/lib:\$LD_LIBRARY_PATH
 
