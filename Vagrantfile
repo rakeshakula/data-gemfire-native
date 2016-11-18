@@ -1,12 +1,13 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-
   config.vm.define "gfcpp" do |gfcpp|
 
     gfcpp.vm.box = "bento/centos-6.7"
       gfcpp.vm.provider :virtualbox do |v|
         v.name = "gfcpp"
-        v.customize ["modifyvm", :id, "--memory", "1024"]
+        v.customize ["modifyvm", :id, "--memory", "2048"]
       end
 
       gfcpp.vm.hostname = "gfcpp.localdomain"
