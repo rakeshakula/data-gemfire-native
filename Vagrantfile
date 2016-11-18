@@ -1,21 +1,36 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure(2) do |config|
-  config.vm.define "gfcpp" do |gfcpp|
+Vagrant.configure("2") do |config|
 
-    gfcpp.vm.box = "bento/centos-6.7"
-      gfcpp.vm.provider :virtualbox do |v|
-        v.name = "gfcpp"
-        v.customize ["modifyvm", :id, "--memory", "2048"]
-      end
+  config.vm.box = "bento/centos-7.2"
 
-      gfcpp.vm.hostname = "gfcpp.localdomain"
-      gfcpp.vm.network :private_network, ip: "10.211.55.200"
-      gfcpp.vm.network :forwarded_port, guest: 5443, host: 5443
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
 
-      gfcpp.vm.provision "shell" do |s|
-        s.path = "prepare_all_nodes.sh"
-      end
-    end
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "10.211.55.200"
+
+  config.vm.provision "shell", inline: <<-SHELL
+
+    yum -y install nc expect ed ntp dmidecode pciutils
+    yum -y install gcc gcc-c++ gmp-devel mpfr-devel unzip
+
+    VAGRANT_HOME=/home/vagrant
+    VERSION=64bit_8214_b3879
+
+    unzip -o -d $VAGRANT_HOME /vagrant/Pivotal_GemFire_NativeClient_Linux_$VERSION.zip
+
+    cat >> $VAGRANT_HOME/.bash_profile <<EOF
+
+export GFCPP=$VAGRANT_HOME/NativeClient_Linux_$VERSION
+export PATH=\\$GFCPP/bin:\$PATH
+export LD_LIBRARY_PATH=\\$GFCPP/lib:\$LD_LIBRARY_PATH
+
+EOF
+
+  SHELL
+
 end
