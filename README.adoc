@@ -1,0 +1,48 @@
+= GemFire Native Labs
+2016
+:toc:
+
+This repository contains two simple labs on the subject of the http://gemfire.docs.pivotal.io/docs-gemfire/gemfire_nativeclient/about_native_client_users_guide.html[Gemfire Native Client].
+
+== Labs and Instructions
+
+You'll find the lab instructions in the file `labinstructions.pdf` and each lab, along with a solved version, in `labs`.
+
+== Environment Setup
+
+We provide a `Vagrantfile` to start up and provision a CentOS VM that can be used to compile and run the labs' source code.
+
+=== Prerequisites
+
+1. VirtualBox: https://www.virtualbox.org
+2. Vagrant: https://www.vagrantup.com/downloads.html
+
+=== Working with Vagrant
+
+* To provision the VM, simply:
+
+  $ vagrant up
++
+* You can ssh into your guest OS with:
+
+  $ vagrant ssh
++
+* All files in this directory are shared with your guest OS under the folder `/vagrant`
+
+  $ cd /vagrant
++
+You'll see a copy of the labs folder in there.
++
+The fact that this folder is shared with both the host and guest OS implies that you have the convenience of editing the lab .cpp (and other) files on your host OS, while compiling the code on the guest OS.
+
+== Tips
+
+* You will need to know how to access gemfire (which is running on your host) from the guest OS.  This command, invoked on the guest should tell you what that IP address is:
+
+  $ netstat -rn | grep '^0.0.0.0 ' | awk '{print $2}'
++
+* For convenience, if you have difficulty compiling Basic.cpp, here is the command:
+
+  $ g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache Basic.cpp -o Basic
+
+
