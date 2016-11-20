@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <client-cache>
-  <!-- TODO-1: Add pdx element and set read-serailized flag to true -->
-  
-  <region name = "Customer" >
-     <region-attributes refid="PROXY" pool-name="examplePool" />
-  </region>	
+
   <pool name="examplePool">
-  	<!-- TODO-0: Replace locator host IP address with the correct Gemfire cluster locator address -->
-    <locator host="10.0.2.2" port="41111" /> 
-  </pool> 										
+    <!-- TODO-0: Replace locator host IP address and port with the correct Gemfire cluster locator address -->
+    <locator host="?" port="?"/>
+  </pool>
+
+  <!-- TODO-1: Add pdx element and set read-serailized flag to true -->
+
+
+  <region name="Customer">
+    <region-attributes refid="PROXY" pool-name="examplePool"/>
+  </region>
+
 </client-cache>

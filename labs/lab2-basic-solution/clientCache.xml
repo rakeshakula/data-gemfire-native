@@ -2,7 +2,7 @@
 <client-cache>
 
   <pool name="examplePool">
-    <!-- TODO-0: Replace locator host IP address with the correct Gemfire cluster locator address -->
+    <!-- TODO-0: Replace locator host IP address and port with the correct Gemfire cluster locator address -->
     <locator host="10.0.2.2" port="10334"/>
   </pool>
 
