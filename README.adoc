@@ -14,8 +14,13 @@ We provide a `Vagrantfile` to start up and provision a CentOS VM that can be use
 
 === Prerequisites
 
-1. VirtualBox: https://www.virtualbox.org
-2. Vagrant: https://www.vagrantup.com/downloads.html
+Download:
+
+1. https://www.virtualbox.org[VirtualBox]
+2. https://www.vagrantup.com/downloads.html[Vagrant]
+3. https://network.pivotal.io/products/pivotal-gemfire/[Pivotal GemFire Native Client for Linux (64-bit)]
+
+Install VirtualBox, Vagrant, and make sure to place the GemFire Native Client zip file in this project's base directory (alongside `Vagrantfile`).
 
 === Working with Vagrant
 
