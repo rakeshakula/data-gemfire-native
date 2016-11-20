@@ -49,149 +49,74 @@ m. `(TODO-10)` After you have retrieved the `PdxInstancePtr` corresponding to th
 
 === Store PDX data from the Java client application
 
-a.
+a. You are now going to access values in the GemFire cache that were stored by an application running on another platform.  That will be a sample Java application from the "Data Serialization" lab of the main "GemFire Developer" course.  We assume that you have successfully setup the main "GemFire Developer" course environment on your laptop and have successfully executed the `io.pivotal.bookshop.buslogic.NewCustomerClient` command-line Java application from the `data-serialization` (or `data-serialization-solution`) project.  When run without any parameters this application creates under the key "9999" in the "Customer" region a PDX-serialized value and stores an instance of `io.pivotal.bookshop.domain.Customer` Java class in the GemFire cache.
 
+b.  Check that the Java object has been successfully stored in the "Customer" region by executing the gfsh command:
 
-b.
+  get --region=/Customer --key="9999" --key-class=java.lang.Integer
 
+You should output similar to the following:
+
+----
+Result      : true
+Key Class   : java.lang.Integer
+Key         : 9999
+Value Class : com.gemstone.gemfire.pdx.internal.PdxInstanceImpl
+
+customerNumber | firstName | lastName | telephoneNumber |                     primaryAddress                      | myBookOrders
+-------------- | --------- | -------- | --------------- | ------------------------------------------------------- | -------------------------
+123            | John      | Doe      | 512.333.4444    | class com.gemstone.gemfire.pdx.internal.PdxInstanceImpl | class java.util.ArrayList
+----
 
 === Reading PDX values stored by the Java application
 
-Follow these steps to start a GemFire cluster in the host OS:
+a. `(TODO-11)` You will now continue implementation of the `PdxInstance.cpp` application by reading the `PdxInstancePtr` object stored under the key 9999 by the Java application from the main GemFire Developer course's "Data Serialization" lab.  Get that object using the available `regionPtr` object.
 
-a. In the host VM, open a command shell.  Choose a working directory:
+b. `(TODO-12)` Read the `PdxInstance` object fields `customerNumber`, `firstName`, `lastName`, and `telephoneNumber` into the pre-defined local variables
 
-  mkdir lab2-basic
-  cd lab2-basic
+c. You are now ready to build the C++ GemFire client application.  Build it in the `lab3-cross-platform` folder, similarly to the way you built `Basic.cpp` in the previous lab:
 
-b. Enter the gemfire shell:
+  g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache PdxInstance.cpp -o PdxInstance
 
-  gfsh
+d. The build should create a native executable file `PdxInstance` in the current folder and generate no warnings or errors.
 
-c. In the `gfsh` console, start a GemFire locator and two server processes.  The locator will run by default on port 10334.  The `server-port=0` argument causes automatic server port assignment:
+e. `(TODO-13)` Now run the `PdxInstance` application
 
-  start locator --name=locator --initial-heap=50m --max-heap=50m
-  start server --name=server1 --server-port=0 --initial-heap=50m --max-heap=50m
-  start server --name=server2 --server-port=0 --initial-heap=50m --max-heap=50m
-
-d. Create a server-side region that our native client application will connect to:
-
-  create region --name=Customer --type=REPLICATE
-
-
-e. Verify that the region has been successfully created:
-
-  list regions
-  describe region --name=/Customer
-
+  ./PdxInstance
 +
-We should see the following output:
+  Observe the console output.  You should see no errors and all log output messages that were added to the application code.
 +
+  Please note that the values of the Customer object with the key "9999" stored by the test Java application are getting also shown correctly and correspond to the values set in the Java application.
+
+  The console output should look similar to the following:
+
 ----
-gfsh>describe region --name=/Customer
-..........................................................
-Name            : Customer
-Data Policy     : replicate
-Hosting Members : server2
-                  server1
-
-Non-Default Attributes Shared By Hosting Members
-
- Type  | Name | Value
------- | ---- | -----
-Region | size | 0
+[config 2016/11/20 23:50:36.001529 UTC localhost.localdomain:12730 140222677391168] Starting the GemFire Native Client
+[info 2016/11/20 23:50:36.001955 UTC localhost.localdomain:12730 140222677391168] Using GFNative_CLbclrplcG12730 as random data for ClientProxyMembershipID
+[info 2016/11/20 23:50:36.004461 UTC localhost.localdomain:12730 140222677391168] Xml file parsed successfully
+[info 2016/11/20 23:50:36.005847 UTC localhost.localdomain:12730 140222677391168] Creating region Customer attached to pool examplePool
+[info 2016/11/20 23:50:36.005940 UTC localhost.localdomain:12730 140222677391168] Declarative configuration of cache completed successfully
+[info 2016/11/20 23:50:36.005956 UTC localhost.localdomain:12730 140222677391168] Created the GemFire Cache
+[info 2016/11/20 23:50:36.005962 UTC localhost.localdomain:12730 140222677391168] Obtained the Region from the Cache
+[info 2016/11/20 23:50:36.005965 UTC localhost.localdomain:12730 140222677391168] ******************* WORKING WITH PDX *******************
+[info 2016/11/20 23:50:36.005972 UTC localhost.localdomain:12730 140222677391168] Created PdxInstanceFactory for Person class
+[info 2016/11/20 23:50:36.006520 UTC localhost.localdomain:12730 140222677391168] Using socket send buffer size of 64240.
+[info 2016/11/20 23:50:36.006530 UTC localhost.localdomain:12730 140222677391168] Using socket receive buffer size of 64240.
+[info 2016/11/20 23:50:36.006922 UTC localhost.localdomain:12730 140222591575808] ClientMetadataService started for pool examplePool
+[info 2016/11/20 23:50:36.036397 UTC localhost.localdomain:12730 140222677391168] Created PdxInstance for Person class
+[info 2016/11/20 23:50:36.038083 UTC localhost.localdomain:12730 140222591575808] Updated client meta data
+[info 2016/11/20 23:50:36.056191 UTC localhost.localdomain:12730 140222677391168] Populated PdxInstance Object
+[info 2016/11/20 23:50:36.057404 UTC localhost.localdomain:12730 140222677391168] Got PdxInstance Object
+[info 2016/11/20 23:50:36.057433 UTC localhost.localdomain:12730 140222677391168] PdxInstance returns all fields value expected
+[info 2016/11/20 23:50:36.057438 UTC localhost.localdomain:12730 140222677391168] ******************* READING JAVA VALUES *******************
+[info 2016/11/20 23:50:36.058514 UTC localhost.localdomain:12730 140222677391168] Read Customer: customerNumber=956301312; firstName=John; lastName=Doe; telephoneNumber=512.333.4444
+[info 2016/11/20 23:50:36.058832 UTC localhost.localdomain:12730 140222591575808] ClientMetadataService stopped for pool examplePool
+[config 2016/11/20 23:50:36.156802 UTC localhost.localdomain:12730 140222677391168] Stopped the GemFire Native Client
+[info 2016/11/20 23:50:36.156839 UTC localhost.localdomain:12730 140222677391168] Closed the GemFire Cache
 ----
 
 
-=== Running the lab example
-
-a. In the Linux VM shell, start the executable that you just built:
-
-  ./Basic
-+
-In the console you should see the GemFire client library log output as well as the log output from our example application.  The output should resemble the following:
-+
-----
-[config 2016/11/20 18:23:50.998242 UTC localhost.localdomain:12500 140067263981376] Starting the GemFire Native Client
-[info 2016/11/20 18:23:50.999202 UTC localhost.localdomain:12500 140067263981376] Using GFNative_hJRlE_Z4Xg12500 as random data for ClientProxyMembershipID
-[info 2016/11/20 18:23:51.005679 UTC localhost.localdomain:12500 140067263981376] Xml file parsed successfully
-[info 2016/11/20 18:23:51.008588 UTC localhost.localdomain:12500 140067263981376] Creating region Customer attached to pool examplePool
-[info 2016/11/20 18:23:51.008862 UTC localhost.localdomain:12500 140067263981376] Declarative configuration of cache completed successfully
-[info 2016/11/20 18:23:51.008893 UTC localhost.localdomain:12500 140067263981376] Created the GemFire Cache
-[info 2016/11/20 18:23:51.008901 UTC localhost.localdomain:12500 140067263981376] Created Region
-[info 2016/11/20 18:23:51.010224 UTC localhost.localdomain:12500 140067263981376] Using socket send buffer size of 64240.
-[info 2016/11/20 18:23:51.010239 UTC localhost.localdomain:12500 140067263981376] Using socket receive buffer size of 64240.
-[info 2016/11/20 18:23:51.010918 UTC localhost.localdomain:12500 140067104339712] ClientMetadataService started for pool examplePool
-[info 2016/11/20 18:23:51.047388 UTC localhost.localdomain:12500 140067263981376] Put the first Entry into the Region
-[info 2016/11/20 18:23:51.051150 UTC localhost.localdomain:12500 140067263981376] Put the second Entry into the Region
-[info 2016/11/20 18:23:51.052965 UTC localhost.localdomain:12500 140067263981376] Obtained the first Entry from the Region: Value1
-[info 2016/11/20 18:23:51.053797 UTC localhost.localdomain:12500 140067263981376] Obtained the second Entry from the Region: 456
-[info 2016/11/20 18:23:51.054628 UTC localhost.localdomain:12500 140067104339712] ClientMetadataService stopped for pool examplePool
-[config 2016/11/20 18:23:51.151175 UTC localhost.localdomain:12500 140067263981376] Stopped the GemFire Native Client
-[info 2016/11/20 18:23:51.151213 UTC localhost.localdomain:12500 140067263981376] Closed the GemFire Cache
-----
-+
-The client application successfully starts, connects to the GemFire cluster, and puts sample entries into the server cache.
-
-b. Let's check in the GemFire gfsh console whether the two sample entries created by the sample app are really stored in the GemFire server cache now.  In the host OS gfsh console where we started the GemFire cluster, enter the following command:
-
-  query --query="select * from /Customer"
-+
-The output should resemble this:
-+
-----
-Result     : true
-startCount : 0
-endCount   : 20
-Rows       : 2
-
-Result
-------
-Value1
-456
-
-NEXT_STEP_NAME : END
-----
-+
-As you can see, there are two entries in the `/Customer` region and their values match what was specified in our native client application.
-+
-Let's check the type of those entries:
-+
-----
-gfsh> get --region=/Customer --key="Key1"
-Result      : true
-Key Class   : java.lang.String
-Key         : Key1
-Value Class : java.lang.String
-Value       : Value1
-----
-+
-The C++ string literals are being stored as Java Strings in teh cache.  If we query for the second key "123" we will find no value avaiable in the cache:
-+
-----
-gfsh>get --region=/Customer --key="123"
-Result      : false
-Key Class   : java.lang.String
-Key         : 123
-Value Class : java.lang.String
-Value       : <NULL>
-----
-+
-This is because the type of the key that we used when storing the "123" entry was CacheableInt32, which maps to a java Integer.  We need to specify the key type in our get command:
-+
-----
-gfsh>get --region=/Customer --key="123" --key-class=java.lang.Integer
-Result      : true
-Key Class   : java.lang.Integer
-Key         : 123
-Value Class : java.lang.Integer
-Value       : 456
-----
-+
-The key and value specified as `CacheableInt32` integer in the C++ client have been stored as Java integer type `java.lang.Integer`.
-
-
-Congratulations!  You have completed this lab.
+Congratulations!  You have now successfully completed this lab.
 
 
 

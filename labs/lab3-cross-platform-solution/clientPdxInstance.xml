@@ -3,7 +3,7 @@
 
   <pool name="examplePool">
     <!-- TODO-0: Replace locator host IP address and port with the correct Gemfire cluster locator address -->
-    <locator host="10.0.2.2" port="10334"/>
+    <locator host="10.0.2.2" port="41111"/>
   </pool>
 
   <!-- TODO-1: Set read-serialized flag to true -->
