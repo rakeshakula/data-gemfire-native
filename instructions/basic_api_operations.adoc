@@ -1,0 +1,207 @@
+= Basic GemFire API Operations
+
+== Introduction
+
+In this lab you will build the first native C++ application that can access data stored in a GemFire cluster using basic GemFire Native Client API.
+
+*What you will learn:*
+
+* Compile and link native Linux executable with the Pivotal GemFire native C++ client library
+
+* Configure client cache with a cache XML file
+
+* Store and access the data in the remote GemFire cluster using basic GemFire C++ client API
+
+*Estimated completion time:* 30 minutes
+
+== Instructions
+
+=== Storing and accessing GemFire data from a client application
+
+a. In the Linux VM shell set in the previous lab, switch to the lab folder
+
+  cd /vagrant/labs/lab2-basic
+
+b. In your favorite editor, open and investigate the `Basic.cpp` and `clientCache.xml` files located in the folder.  `Basic.cpp` contains incomplete code of a simple command-line C++ application that will be accessing a remote GemFire cluster running in the host OS.  The application will access the GemFire cluster using native GemFire client cache configuration from the `clientCache.xml` file.  This file is in the same XML format used by Java client applications.
++
+Each file contains "TODO" markers that indicate places where you need to modify code in order to complete the lab.
+
+c. `(TODO-0)` In the `clientCache.xml` modify the IP address of the GemFire locator that will be used by the native client cache.  Replace the IP address with the IP address of the machine where your test GemFire cluster is running, e.g. your host OS
+
+d. `(TODO-1)` In `Basic.cpp` include the `<gfcpp/GemfireCppCache.hpp>` file to enable access to the GemFire API in the code
+
+e. `(TODO-2)` The Pivotal GemFire native API calls are part of the `gemfire` C++ namespace.  In order not to enter this namespace in each call to the GemFire API function, add `gemfire` namespace to the visibility scope in `Basic.cpp`
+
+f. `(TODO-3)` The first thing we need to do to start working with the GemFire cache is to obtain an instance of the `CacheFactoryPtr` object.  Use the static `createCacheFactory()` method of the `gemfire::CacheFactory` class for that.  Note that you do not need to explicitly specify the `gemfire` namespace here.
+
+g. `(TODO-4)` Use the `CacheFactoryPtr` object to configure it to use the external client cache configuration from the `clientCache.xml` file and create a client cache represented by the `CachePtr` object using the `create()` method.
+
+h. `(TODO-5)` You can now get the instance of the cache `RegionPtr` object, which you can use to access the `Customer` GemFire region.  Use `getRegion(...)` method of the `CachePtr` class.
+
+i. `(TODO-6)` Use the `RegionPtr` object now to put simple string key and value to the `Customer` region.  Use the shortcut `put()` method and pass C++ string literal to it directly.
+
+j. `(TODO-7)` You will create the second entry in the `Customer` region with the integer key and value types.  Use the `CacheableInt32` class and its static `create(...)` method to create `CacheableKeyPtr` and `CacheablePtr` objects for the entry key and value that are then passed to the `regionPtr->put()` method.
+
+k. `(TODO-8)` Use the `regionPtr->get(...)` to retrieve from the GemFire cache the value of the keys stored in the `Customer` region from the prior two steps
+
+l. `(TODO-9)` At the end of the program close the GemFire client cache gracefully using the `close()` method of the `CachePtr` class
+
+=== Building the client application sources
+
+a. In the Linux VM shell, switch to the lab folder
+
+  cd /vagrant/labs/lab2-basic
+
+b. Build `Basic.cpp` into a native Linux executable.  If you set the Linux VM environment as described in the setup instructions, the following command should execute without errors and generate the executable file `Basic` in the current working directory
+
+  g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache Basic.cpp -o Basic
++
+The `-D_REENTRANT -O3 -Wall -m64 -Wl,-rpath` command line switches are not necessarily required to perform the build but are recommended in the Pivotal GemFire User's Guide.
+
+[NOTE]
+====
+If you encounter multiple compilation errors at this step, verify whether the GFCPP environment variable is set to the GemFire native client base directory `~/NativeClient_Linux_64bit_8214_b3879`:
+
+  echo ${GFCPP}
+====
+
+=== Starting up the GemFire server cluster
+
+Follow these steps to start a GemFire cluster in the host OS:
+
+a. In the host VM, open a command shell.  Choose a working directory:
+
+  mkdir lab2-basic
+  cd lab2-basic
+
+b. Enter the gemfire shell:
+
+  gfsh
+
+c. In the `gfsh` console, start a GemFire locator and two server processes.  The locator will run by default on port 10334.  The `server-port=0` argument causes automatic server port assignment:
+
+  start locator --name=locator --initial-heap=50m --max-heap=50m
+  start server --name=server1 --server-port=0 --initial-heap=50m --max-heap=50m
+  start server --name=server2 --server-port=0 --initial-heap=50m --max-heap=50m
+
+d. Create a server-side region that our native client application will connect to:
+
+  create region --name=Customer --type=REPLICATE
+
+
+e. Verify that the region has been successfully created:
+
+  list regions
+  describe region --name=/Customer
+
++
+We should see the following output:
++
+----
+gfsh>describe region --name=/Customer
+..........................................................
+Name            : Customer
+Data Policy     : replicate
+Hosting Members : server2
+                  server1
+
+Non-Default Attributes Shared By Hosting Members
+
+ Type  | Name | Value
+------ | ---- | -----
+Region | size | 0
+----
+
+
+=== Running the lab example
+
+a. In the Linux VM shell, start the executable that you just built:
+
+  ./Basic
++
+In the console you should see the GemFire client library log output as well as the log output from our example application.  The output should resemble the following:
++
+----
+[config 2016/11/20 18:23:50.998242 UTC localhost.localdomain:12500 140067263981376] Starting the GemFire Native Client
+[info 2016/11/20 18:23:50.999202 UTC localhost.localdomain:12500 140067263981376] Using GFNative_hJRlE_Z4Xg12500 as random data for ClientProxyMembershipID
+[info 2016/11/20 18:23:51.005679 UTC localhost.localdomain:12500 140067263981376] Xml file parsed successfully
+[info 2016/11/20 18:23:51.008588 UTC localhost.localdomain:12500 140067263981376] Creating region Customer attached to pool examplePool
+[info 2016/11/20 18:23:51.008862 UTC localhost.localdomain:12500 140067263981376] Declarative configuration of cache completed successfully
+[info 2016/11/20 18:23:51.008893 UTC localhost.localdomain:12500 140067263981376] Created the GemFire Cache
+[info 2016/11/20 18:23:51.008901 UTC localhost.localdomain:12500 140067263981376] Created Region
+[info 2016/11/20 18:23:51.010224 UTC localhost.localdomain:12500 140067263981376] Using socket send buffer size of 64240.
+[info 2016/11/20 18:23:51.010239 UTC localhost.localdomain:12500 140067263981376] Using socket receive buffer size of 64240.
+[info 2016/11/20 18:23:51.010918 UTC localhost.localdomain:12500 140067104339712] ClientMetadataService started for pool examplePool
+[info 2016/11/20 18:23:51.047388 UTC localhost.localdomain:12500 140067263981376] Put the first Entry into the Region
+[info 2016/11/20 18:23:51.051150 UTC localhost.localdomain:12500 140067263981376] Put the second Entry into the Region
+[info 2016/11/20 18:23:51.052965 UTC localhost.localdomain:12500 140067263981376] Obtained the first Entry from the Region: Value1
+[info 2016/11/20 18:23:51.053797 UTC localhost.localdomain:12500 140067263981376] Obtained the second Entry from the Region: 456
+[info 2016/11/20 18:23:51.054628 UTC localhost.localdomain:12500 140067104339712] ClientMetadataService stopped for pool examplePool
+[config 2016/11/20 18:23:51.151175 UTC localhost.localdomain:12500 140067263981376] Stopped the GemFire Native Client
+[info 2016/11/20 18:23:51.151213 UTC localhost.localdomain:12500 140067263981376] Closed the GemFire Cache
+----
++
+The client application successfully starts, connects to the GemFire cluster, and puts sample entries into the server cache.
+
+b. Let's check in the GemFire gfsh console whether the two sample entries created by the sample app are really stored in the GemFire server cache now.  In the host OS gfsh console where we started the GemFire cluster, enter the following command:
+
+  query --query="select * from /Customer"
++
+The output should resemble this:
++
+----
+Result     : true
+startCount : 0
+endCount   : 20
+Rows       : 2
+
+Result
+------
+Value1
+456
+
+NEXT_STEP_NAME : END
+----
++
+As you can see, there are two entries in the `/Customer` region and their values match what was specified in our native client application.
++
+Let's check the type of those entries:
++
+----
+gfsh> get --region=/Customer --key="Key1"
+Result      : true
+Key Class   : java.lang.String
+Key         : Key1
+Value Class : java.lang.String
+Value       : Value1
+----
++
+The C++ string literals are being stored as Java Strings in teh cache.  If we query for the second key "123" we will find no value avaiable in the cache:
++
+----
+gfsh>get --region=/Customer --key="123"
+Result      : false
+Key Class   : java.lang.String
+Key         : 123
+Value Class : java.lang.String
+Value       : <NULL>
+----
++
+This is because the type of the key that we used when storing the "123" entry was CacheableInt32, which maps to a java Integer.  We need to specify the key type in our get command:
++
+----
+gfsh>get --region=/Customer --key="123" --key-class=java.lang.Integer
+Result      : true
+Key Class   : java.lang.Integer
+Key         : 123
+Value Class : java.lang.Integer
+Value       : 456
+----
++
+The key and value specified as `CacheableInt32` integer in the C++ client have been stored as Java integer type `java.lang.Integer`.
+
+
+Congratulations!  You have completed this lab.
+
+
+

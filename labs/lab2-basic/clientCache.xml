@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <client-cache>
-  <region name="Customer" >
-     <region-attributes refid="PROXY" pool-name="examplePool" />
-  </region>
+
   <pool name="examplePool">
-  	<!-- TODO-0: Replace locator host IP address with the correct Gemfire cluster locator address -->
-    <locator host="10.0.2.2" port="41111" /> 
+    <!-- TODO-0: Replace locator host IP address and port with the correct Gemfire cluster locator address -->
+    <locator host="?" port="?"/>
   </pool>
+
+  <region name="Customer">
+    <region-attributes refid="PROXY" pool-name="examplePool"/>
+  </region>
+
 </client-cache>
