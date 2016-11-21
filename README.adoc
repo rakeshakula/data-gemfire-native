@@ -6,7 +6,7 @@ This repository contains two simple labs on the subject of the http://gemfire.do
 
 == Labs and Instructions
 
-You'll find the lab instructions in the file `labinstructions.pdf` and each lab, along with a solved version, in `labs`.
+You'll find the lab instructions in the folder labeled `instructions.`  The `labs` folder contains each of the two labs' artifacts, along with a solved version.
 
 == Environment Setup
 
