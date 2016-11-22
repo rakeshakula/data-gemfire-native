@@ -26,7 +26,7 @@ b. In your favorite editor, open and investigate the `Basic.cpp` and `clientCach
 +
 Each file contains "TODO" markers that indicate places where you need to modify code in order to complete the lab.
 
-c. `(TODO-0)` In `clientCache.xml` modify the IP address of the GemFire locator that will be used by the native client cache.  Replace the IP address with the IP address of the machine where your test GemFire cluster is running, e.g. your host OS.
+c. `(TODO-0)` In `clientCache.xml` modify the IP address of the GemFire locator that will be used by the native client cache.  Replace the IP address with the IP address of the machine where your test GemFire cluster is running, e.g. your host OS.  See the "Tips" section in the README document for how to discover how to reference the host OS ip address from the guest VM.
 
 d. `(TODO-1)` In `Basic.cpp` include the `<gfcpp/GemfireCppCache.hpp>` file to enable access to the GemFire API in the code
 

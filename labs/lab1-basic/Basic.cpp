@@ -1,6 +1,6 @@
 /*
 * Gemfire Developer Native Client Course
-* Lab2: Basic Gemfire API operations
+* Lab1: Basic Gemfire API operations
 *
 * This example takes the following steps:
 *

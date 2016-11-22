@@ -1,6 +1,6 @@
 /*
 * Gemfire Developer Native Client Course
-* Lab3: PDX serialization and cross-platform communication
+* Lab2: PDX serialization and cross-platform communication
 *
 * This example takes the following steps:
 *
