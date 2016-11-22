@@ -6,8 +6,7 @@
     <locator host="?" port="?"/>
   </pool>
 
-  <!-- TODO-1: Add pdx element and set read-serailized flag to true -->
-
+  <!-- TODO-1: Add pdx element and set read-serialized flag to true -->
 
   <region name="Customer">
     <region-attributes refid="PROXY" pool-name="examplePool"/>

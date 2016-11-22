@@ -6,7 +6,7 @@
     <locator host="10.0.2.2" port="41111"/>
   </pool>
 
-  <!-- TODO-1: Set read-serialized flag to true -->
+  <!-- TODO-1: Add pdx element and set read-serialized flag to true -->
   <pdx read-serialized="true"/>
 
   <region name="Customer">
