@@ -18,8 +18,8 @@
 * TODO-1: In the clientPdxInstance.xml add pdx element and set read-serailized flag to true
 * TODO-2: Create an instance of the Person class to be stored in the Gemfire cache using PDX serialization
 * TODO-3: Create PdxInstanceFactoryPtr object for the "Person" class
-* TODO-4: Wrtie Person's field "m_name" to the PdxInstanceFactoryPtr as String
-* TODO-5: Wrtie Person's field "m_id" to the PdxInstanceFactoryPtr as Integer
+* TODO-4: Write Person's field "m_name" to the PdxInstanceFactoryPtr as String
+* TODO-5: Write Person's field "m_id" to the PdxInstanceFactoryPtr as Integer
 * TODO-6: Mark "m_id" field as PDX instance identity field
 * TODO-7: Create PdxInstancePtr object from the PdxInstanceFactoryPtr
 * TODO-8: Put the PdxInstancePtr object to the "Customer" region under key "Key3" as is
@@ -163,7 +163,7 @@ int main(int argc, char ** argv)
 	char* name = NULL;
 	retPdxInstance->getField("m_name", &name);
 
-	// The folloiwng check compares the field values of the retrieved object with the initial ones
+	// The following check compares the field values of the retrieved object with the initial ones
 	if(id == p.getID() && age == p.getAge() && strcmp(name, p.getName()) == 0
 	 	&& retPdxInstance->isIdentityField("m_id")) {
 	    LOGINFO("PdxInstance returns all fields value expected");
