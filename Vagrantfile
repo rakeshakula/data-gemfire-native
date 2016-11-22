@@ -25,6 +25,8 @@ export GFCPP=$VAGRANT_HOME/NativeClient_Linux_$VERSION
 export PATH=\\$GFCPP/bin:\$PATH
 export LD_LIBRARY_PATH=\\$GFCPP/lib:\$LD_LIBRARY_PATH
 
+set -o vi
+
 EOF
 
   SHELL
