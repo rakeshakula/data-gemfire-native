@@ -1,4 +1,4 @@
-= Basic GemFire API Operations
+= Lab 1:  Basic GemFire API Operations
 
 == Introduction
 
@@ -20,7 +20,7 @@ In this lab you will build the first native C++ application that can access data
 
 a. In the Linux VM shell set in the previous lab, switch to the lab folder
 
-  cd /vagrant/labs/lab2-basic
+  cd /vagrant/labs/lab1-basic
 
 b. In your favorite editor, open and investigate the `Basic.cpp` and `clientCache.xml` files located in the folder.  `Basic.cpp` contains incomplete code of a simple command-line C++ application that will be accessing a remote GemFire cluster running in the host OS.  The application will access the GemFire cluster using native GemFire client cache configuration from the `clientCache.xml` file.  This file is in the same XML format used by Java client applications.
 +
@@ -50,7 +50,7 @@ l. `(TODO-9)` At the end of the program close the GemFire client cache gracefull
 
 a. In the Linux VM shell, switch to the lab folder
 
-  cd /vagrant/labs/lab2-basic
+  cd /vagrant/labs/lab1-basic
 
 b. Build `Basic.cpp` into a native Linux executable.  If you set the Linux VM environment as described in the setup instructions, the following command should execute without errors and generate the executable file `Basic` in the current working directory
 
@@ -71,8 +71,8 @@ Follow these steps to start a GemFire cluster in the host OS:
 
 a. In the host VM, open a command shell.  Choose a working directory:
 
-  mkdir lab2-basic
-  cd lab2-basic
+  mkdir lab1-basic
+  cd lab1-basic
 
 b. Enter the gemfire shell:
 
@@ -202,6 +202,3 @@ The key and value specified as `CacheableInt32` integer in the C++ client have b
 
 
 Congratulations!  You have completed this lab.
-
-
-

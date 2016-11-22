@@ -1,4 +1,4 @@
-= Cross-platform communication using PDX
+= Lab 2: Cross-platform communication using PDX
 
 == Introduction
 
@@ -20,9 +20,9 @@ In this lab you will build a native C++ application that can access data stored 
 
 a. In the Linux VM shell, switch to the lab folder:
 
-  cd /vagrant/labs/lab3-cross-platform
+  cd /vagrant/labs/lab2-cross-platform
 
-b. In your favorite editor, open and investigate the `PdxInstance.cpp` and `clientPdxInstance.xml` files.  `PdxInstance.cpp` is a simple console application that acts as a GemFire client and stores PDX serialized data in the remote GemFire distributed system.  The `clientPdxInstance.xml` file is a GemFire cache XML file used by `PdxInstance.cpp` to configure GemFire client cache instance.  You will need to fill in the places marked with `"TODO"` in both files in order to complete this lab.  Please refer to the `lab3-cross-platform-solution` folder for the full working version of the application.
+b. In your favorite editor, open and investigate the `PdxInstance.cpp` and `clientPdxInstance.xml` files.  `PdxInstance.cpp` is a simple console application that acts as a GemFire client and stores PDX serialized data in the remote GemFire distributed system.  The `clientPdxInstance.xml` file is a GemFire cache XML file used by `PdxInstance.cpp` to configure GemFire client cache instance.  You will need to fill in the places marked with `"TODO"` in both files in order to complete this lab.  Please refer to the `lab2-cross-platform-solution` folder for the full working version of the application.
 
 c. `(TODO-0)` In `clientPdxInstance.xml` modify the IP address of the GemFire locator that will be used by the native client cache.  Replace the IP address with the IP address of the machine where your test GemFire cluster is running, e.g. your host OS.
 
@@ -74,7 +74,7 @@ a. `(TODO-11)` You will now continue implementation of the `PdxInstance.cpp` app
 
 b. `(TODO-12)` Read the `PdxInstance` object fields `customerNumber`, `firstName`, `lastName`, and `telephoneNumber` into the pre-defined local variables
 
-c. You are now ready to build the C++ GemFire client application.  Build it in the `lab3-cross-platform` folder, similarly to the way you built `Basic.cpp` in the previous lab:
+c. You are now ready to build the C++ GemFire client application.  Build it in the `lab2-cross-platform` folder, similarly to the way you built `Basic.cpp` in the previous lab:
 
   g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache PdxInstance.cpp -o PdxInstance
 
@@ -117,6 +117,3 @@ e. `(TODO-13)` Now run the `PdxInstance` application
 
 
 Congratulations!  You have now successfully completed this lab.
-
-
-
