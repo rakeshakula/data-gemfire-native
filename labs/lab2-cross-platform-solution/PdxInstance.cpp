@@ -181,8 +181,11 @@ int main(int argc, char ** argv)
 
 	// TODO-12: Read the "customerNumber", "firstName", "lastName", "telephoneNumber" fields
 	//          of the retrieved PdxInstancePtr object
-	int32_t customerNumber = 0;
-	pdxCustomer->getField("customerNumber", customerNumber);
+
+	CacheablePtr customerNumberPtr = NULLPTR;
+	pdxCustomer->getField("customerNumber", customerNumberPtr);
+	CacheableInt32Ptr customerNumberIntPtr = dynCast<CacheableInt32Ptr>(customerNumberPtr);
+	int32_t customerNumber = customerNumberIntPtr->value();
 
 	char* firstName;
 	pdxCustomer->getField("firstName", &firstName);
