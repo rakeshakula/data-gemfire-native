@@ -84,12 +84,12 @@ e. `(TODO-13)` Now run the `PdxInstance` application
 
   ./PdxInstance
 +
-  Observe the console output.  You should see no errors and all log output messages that were added to the application code.
+Observe the console output.  You should see no errors and all log output messages that were added to the application code.
 +
-  Please note that the values of the Customer object with the key "9999" stored by the test Java application are getting also shown correctly and correspond to the values set in the Java application.
-
-  The console output should look similar to the following:
-
+Please note that the values of the Customer object with the key "9999" stored by the test Java application are getting also shown correctly and correspond to the values set in the Java application.
++
+The console output should look similar to the following:
++
 ----
 [config 2016/11/20 23:50:36.001529 UTC localhost.localdomain:12730 140222677391168] Starting the GemFire Native Client
 [info 2016/11/20 23:50:36.001955 UTC localhost.localdomain:12730 140222677391168] Using GFNative_CLbclrplcG12730 as random data for ClientProxyMembershipID
