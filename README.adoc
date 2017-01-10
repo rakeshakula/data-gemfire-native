@@ -2,11 +2,11 @@
 2016
 :toc:
 
-This repository contains two simple labs on the subject of the http://gemfire-native.docs.pivotal.io/native/about_native_client_users_guide.html[Gemfire Native Client].
+This repository contains two labs on the subject of the http://gemfire-native.docs.pivotal.io/native/about_native_client_users_guide.html[Gemfire Native Client].
 
-== Labs and Instructions
+Each lab consists of code and artifacts that represent your starting point, along with instructions that will walk you through the steps necessary to complete each task.
 
-You'll find the lab instructions in the folder labeled `instructions.`  The `labs` folder contains each of the two labs' artifacts, along with a solved version.
+Each lab also comes with a solved version, for reference.
 
 == Environment Setup
 
@@ -46,6 +46,3 @@ The fact that this folder is shared with both the host and guest OS implies that
 
   $ netstat -rn | grep '^0.0.0.0 ' | awk '{print $2}'
 +
-* For convenience, if you have difficulty compiling Basic.cpp, here is the command:
-
-  $ g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache Basic.cpp -o Basic
