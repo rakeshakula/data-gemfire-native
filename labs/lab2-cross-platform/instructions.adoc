@@ -109,11 +109,10 @@ The console output should look similar to the following:
 [info 2016/11/20 23:50:36.057404 UTC localhost.localdomain:12730 140222677391168] Got PdxInstance Object
 [info 2016/11/20 23:50:36.057433 UTC localhost.localdomain:12730 140222677391168] PdxInstance returns all fields value expected
 [info 2016/11/20 23:50:36.057438 UTC localhost.localdomain:12730 140222677391168] ******************* READING JAVA VALUES *******************
-[info 2016/11/20 23:50:36.058514 UTC localhost.localdomain:12730 140222677391168] Read Customer: customerNumber=9999; firstName=John; lastName=Doe; telephoneNumber=512.333.4444
+[info 2017/01/10 23:23:07.727741 UTC localhost.localdomain:12624 139803555612480] Read Customer: customerNumber=123; firstName=John; lastName=Doe; telephoneNumber=512.333.4444
 [info 2016/11/20 23:50:36.058832 UTC localhost.localdomain:12730 140222591575808] ClientMetadataService stopped for pool examplePool
 [config 2016/11/20 23:50:36.156802 UTC localhost.localdomain:12730 140222677391168] Stopped the GemFire Native Client
 [info 2016/11/20 23:50:36.156839 UTC localhost.localdomain:12730 140222677391168] Closed the GemFire Cache
 ----
-
 
 Congratulations!  You have now successfully completed this lab.
