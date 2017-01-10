@@ -22,8 +22,8 @@ Vagrant.configure("2") do |config|
     cat >> $VAGRANT_HOME/.bash_profile <<EOF
 
 export GFCPP=$VAGRANT_HOME/NativeClient_Linux_$VERSION
-export PATH=\\$GFCPP/bin:\$PATH
-export LD_LIBRARY_PATH=\\$GFCPP/lib:\$LD_LIBRARY_PATH
+export PATH=\\$GFCPP/bin:\\$PATH
+export LD_LIBRARY_PATH=\\$GFCPP/lib:\\$LD_LIBRARY_PATH
 
 set -o vi
 
