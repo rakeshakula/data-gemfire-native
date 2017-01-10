@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
     CacheFactoryPtr cacheFactory = CacheFactory::createCacheFactory();
 
     // TODO-4: Use cacheFactory instance to create a GemFire Client Cache with configuration from the clientCache.xml file
-    CachePtr cachePtr = cacheFactory->set("cache-xml-file", "./clientCache.xml")->create();          
+    CachePtr cachePtr = cacheFactory->set("cache-xml-file", "./clientCache.xml")->create();
 
     LOGINFO("Created the GemFire Cache");
 

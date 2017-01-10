@@ -2,4 +2,9 @@
 .idea
 *.iml
 .vagrant
+
 Pivotal_GemFire_NativeClient_Linux_64bit_*.zip
+
+# produced binaries..
+labs/lab1-basic/Basic
+labs/lab2-cross-platform/PdxInstance
