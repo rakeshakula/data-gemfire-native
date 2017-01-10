@@ -1,6 +1,5 @@
 = GemFire Native Labs
 2016
-:toc:
 
 This repository contains two labs on the subject of the http://gemfire-native.docs.pivotal.io/native/about_native_client_users_guide.html[Gemfire Native Client].
 
