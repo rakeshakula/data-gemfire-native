@@ -38,7 +38,7 @@ Install VirtualBox, Vagrant, and make sure to place the GemFire Native Client zi
 +
 You'll see a copy of the labs folder in there.
 +
-The fact that this folder is shared with both the host and guest OS implies that you have the convenience of editing the lab .cpp (and other) files on your host OS, while compiling the code on the guest OS.
+The fact that this folder is shared with both the host and guest OS implies that you have the convenience of editing the lab .cpp (and other) files on your host OS, while compiling and running the code on the guest OS.
 
 == Tips
 
@@ -49,5 +49,3 @@ The fact that this folder is shared with both the host and guest OS implies that
 * For convenience, if you have difficulty compiling Basic.cpp, here is the command:
 
   $ g++ -D_REENTRANT -O3 -Wall -m64 -I${GFCPP}/include -L${GFCPP}/lib -Wl,-rpath,${GFCPP}/lib -lgfcppcache Basic.cpp -o Basic
-
-
